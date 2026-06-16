@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYROX China</title>
+<style>
+:root {
+  --bg: #f5f4f0;
+  --surface: #ffffff;
+  --border: #e8e6de;
+  --text: #1c1b18;
+  --text-muted: #78766e;
+  --text-light: #b0ada4;
+  --accent: #2563eb;
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 40px;display:flex;align-items:center;gap:16px}
+.logo-mark{width:36px;height:36px;background:#1c1b18;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;letter-spacing:-.02em;flex-shrink:0}
+.logo-text{font-size:16px;font-weight:700;letter-spacing:-.02em}
+.logo-sub{font-size:12px;color:var(--text-muted);margin-top:1px}
+.header-right{margin-left:auto;font-size:11px;color:var(--text-light)}
+
+main{flex:1;padding:40px;max-width:1000px;margin:0 auto;width:100%}
+
+.greeting{margin-bottom:32px}
+.greeting h1{font-size:22px;font-weight:700;margin-bottom:6px}
+.greeting p{font-size:13px;color:var(--text-muted);line-height:1.6}
+
+.section-label{font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:40px}
+
+.tool-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px 24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .18s,transform .18s,border-color .18s;cursor:pointer;position:relative;overflow:hidden}
+.tool-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.09);transform:translateY(-2px);border-color:var(--accent)}
+.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.card-blue::before{background:#2563eb}
+.card-green::before{background:#16a34a}
+.card-amber::before{background:#d97706}
+.card-purple::before{background:#7c3aed}
+.card-rose::before{background:#e11d48}
+
+.card-icon{font-size:28px;line-height:1}
+.card-title{font-size:15px;font-weight:700;color:var(--text)}
+.card-desc{font-size:12px;color:var(--text-muted);line-height:1.6;flex:1}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.card-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--bg);color:var(--text-muted);border:1px solid var(--border)}
+.card-arrow{font-size:16px;color:var(--text-light);transition:transform .18s,color .18s}
+.tool-card:hover .card-arrow{transform:translateX(3px);color:var(--accent)}
+
+footer{padding:24px 40px;border-top:1px solid var(--border);background:var(--surface);font-size:11px;color:var(--text-light);display:flex;align-items:center;gap:8px}
+.footer-dot{width:5px;height:5px;border-radius:50%;background:#16a34a}
+
+@media(max-width:600px){
+  header,main,footer{padding-left:20px;padding-right:20px}
+  main{padding-top:28px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">HX</div>
+  <div>
+    <div class="logo-text">HYROX China</div>
+    <div class="logo-sub"></div>
+  </div>
+  <div class="header-right" id="time-display"></div>
+</header>
+
+<main>
+  <div class="greeting">
+    <h1>欢迎回来 👋</h1>
+    <p>以下是当前所有运营工具的入口，点击卡片直接跳转。</p>
+  </div>
+
+  <div class="section-label">运营 & 数据</div>
+  <div class="grid">
+
+    <a href="https://addie-5151.github.io/venue-kanban/" target="_blank" class="tool-card card-blue">
+      <div class="card-icon">🏗️</div>
+      <div class="card-title">赛场搭建进度</div>
+      <div class="card-desc">实时查看搭建任务进度、人员分配、各区域完成状态，支持按 Day 切换和甘特 / 看板双视图。</div>
+      <div class="card-footer">
+        <span class="card-tag">Venue Kanban</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a href="https://addie-5151.github.io/athletes-feedback/" target="_blank" class="tool-card card-purple">
+      <div class="card-icon">📊</div>
+      <div class="card-title">运动员反馈看板</div>
+      <div class="card-desc">每站赛后更新。包含情感分布、高频关键词词云、CoZe 问题分类、社媒舆情以及重点关注 Case 分析。</div>
+      <div class="card-footer">
+        <span class="card-tag">Athletes Feedback</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-label">客服 & 支持</div>
+  <div class="grid">
+
+    <a href="https://addie-5151.github.io/hyrox-faq/" target="_blank" class="tool-card card-amber">
+      <div class="card-icon">📋</div>
+      <div class="card-title">FAQ 常见问题库</div>
+      <div class="card-desc">选手高频咨询问题标准回答，涵盖报名、支付、组别、退款、赛事规则等类别。</div>
+      <div class="card-footer">
+        <span class="card-tag">HYROX FAQ</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a href="https://addie-5151.github.io/CS-workflow/" target="_blank" class="tool-card card-amber">
+      <div class="card-icon">💬</div>
+      <div class="card-title">客服工作流程</div>
+      <div class="card-desc">客服团队日常工作 SOP，包含回复规范、问题分级、跨部门协作流程。</div>
+      <div class="card-footer">
+        <span class="card-tag">CS Workflow</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a href="https://addie-5151.github.io/raceday-helpdesk-workflow/" target="_blank" class="tool-card card-green">
+      <div class="card-icon">🏁</div>
+      <div class="card-title">比赛日 Helpdesk 流程</div>
+      <div class="card-desc">比赛日现场问题处理标准流程，包含常见突发情况的应对步骤与升级路径。</div>
+      <div class="card-footer">
+        <span class="card-tag">Raceday Workflow</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-dot"></div>
+  <span>HYROX China · 内部工具导航</span>
+</footer>
+
+<script>
+function updateTime() {
+  const now = new Date();
+  const opts = { timeZone:'Asia/Shanghai', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' };
+  document.getElementById('time-display').textContent = now.toLocaleString('zh-CN', opts) + ' CST';
+}
+updateTime();
+setInterval(updateTime, 60000);
+</script>
+
+</body>
+</html>
