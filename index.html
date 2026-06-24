@@ -3,156 +3,789 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HYROX China</title>
+<title>HYROX · Athlete Platform</title>
 <style>
 :root {
-  --bg: #f5f4f0;
-  --surface: #ffffff;
-  --border: #e8e6de;
-  --text: #1c1b18;
-  --text-muted: #78766e;
-  --text-light: #b0ada4;
-  --accent: #2563eb;
-  --radius: 10px;
-  --radius-lg: 16px;
+  --bg:#f4f3ef;--surface:#fff;--surface2:#faf9f7;--border:#e8e5dd;--border-mid:#d4d0c6;
+  --text:#1a1916;--muted:#6e6b62;--light:#a8a49a;
+  --red:#e8192c;--red-bg:#fde8ea;--red-border:#fca5a5;
+  --gold:#c4922a;--gold-bg:#fdf4e3;--gold-border:#fde68a;
+  --blue:#1d4ed8;--blue-bg:#eff6ff;--blue-border:#bfdbfe;
+  --green:#15803d;--green-bg:#f0fdf4;--green-border:#bbf7d0;
+  --purple:#6d28d9;--purple-bg:#f5f3ff;--purple-border:#ddd6fe;
+  --r:10px;--rlg:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);font-size:13px}
 
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 40px;display:flex;align-items:center;gap:16px}
-.logo-mark{width:36px;height:36px;background:#1c1b18;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;letter-spacing:-.02em;flex-shrink:0}
-.logo-text{font-size:16px;font-weight:700;letter-spacing:-.02em}
-.logo-sub{font-size:12px;color:var(--text-muted);margin-top:1px}
-.header-right{margin-left:auto;font-size:11px;color:var(--text-light)}
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;height:52px;padding:0 24px;gap:0}
+.nl{font-size:14px;font-weight:800;letter-spacing:-.02em;margin-right:24px;white-space:nowrap}
+.nl em{color:var(--red);font-style:normal}
+.nt{display:flex;gap:0;overflow-x:auto;flex:1}
+.ntb{padding:0 14px;height:52px;border:none;background:transparent;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.ntb.active,.ntb:hover{color:var(--red);border-bottom-color:var(--red)}
 
-main{flex:1;padding:40px;max-width:1000px;margin:0 auto;width:100%}
+.page{display:none;padding:24px 24px 60px;max-width:1100px;margin:0 auto}
+.page.active{display:block}
 
-.greeting{margin-bottom:32px}
-.greeting h1{font-size:22px;font-weight:700;margin-bottom:6px}
-.greeting p{font-size:13px;color:var(--text-muted);line-height:1.6}
+.sh{margin-bottom:20px}
+.sh-eye{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:5px}
+.sh-title{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.sh-sub{font-size:13px;color:var(--muted);margin-top:4px}
 
-.section-label{font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);padding:18px 20px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.divider{height:1px;background:var(--border);margin:16px 0}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:40px}
+.tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px}
+.tg{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border)}
+.tb{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.tr{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.tgr{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.tp{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border)}
 
-.tool-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px 24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .18s,transform .18s,border-color .18s;cursor:pointer;position:relative;overflow:hidden}
-.tool-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.09);transform:translateY(-2px);border-color:var(--accent)}
-.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius-lg) var(--radius-lg) 0 0}
-.card-blue::before{background:#2563eb}
-.card-green::before{background:#16a34a}
-.card-amber::before{background:#d97706}
-.card-purple::before{background:#7c3aed}
-.card-rose::before{background:#e11d48}
+/* PROFILE */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);padding:16px 18px}
+.kpi-v{font-size:28px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:3px}
+.kpi-l{font-size:11px;color:var(--muted);font-weight:500}
+.kpi-s{font-size:10px;color:var(--light);margin-top:2px}
 
-.card-icon{font-size:28px;line-height:1}
-.card-title{font-size:15px;font-weight:700;color:var(--text)}
-.card-desc{font-size:12px;color:var(--text-muted);line-height:1.6;flex:1}
-.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
-.card-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--bg);color:var(--text-muted);border:1px solid var(--border)}
-.card-arrow{font-size:16px;color:var(--text-light);transition:transform .18s,color .18s}
-.tool-card:hover .card-arrow{transform:translateX(3px);color:var(--accent)}
+.sc-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.sc-label{font-size:11px;color:var(--muted);width:90px;flex-shrink:0;text-align:right}
+.sc-track{flex:1;background:var(--bg);border-radius:4px;height:20px;overflow:hidden}
+.sc-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 8px;font-size:10px;font-weight:700;color:#fff}
+.sc-v{font-size:11px;font-weight:600;width:50px;text-align:right;flex-shrink:0}
+.sc-d{font-size:10px;width:60px;text-align:right;flex-shrink:0}
 
-footer{padding:24px 40px;border-top:1px solid var(--border);background:var(--surface);font-size:11px;color:var(--text-light);display:flex;align-items:center;gap:8px}
-.footer-dot{width:5px;height:5px;border-radius:50%;background:#16a34a}
+/* BATTLE */
+.battle-sel{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.battle-sel select,.battle-sel input{flex:1;min-width:160px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;background:var(--surface);color:var(--text);outline:none}
+.battle-sel select:focus,.battle-sel input:focus{border-color:var(--red)}
+.btn{padding:9px 18px;border:none;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.btn-r{background:var(--red);color:#fff}.btn-r:hover{opacity:.88}
+.btn-out{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn-out:hover{border-color:var(--red);color:var(--red)}
 
-@media(max-width:600px){
-  header,main,footer{padding-left:20px;padding-right:20px}
-  main{padding-top:28px}
+.invite-box{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:var(--rlg);padding:16px 18px;margin-bottom:14px}
+.invite-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px}
+.invite-sub{font-size:12px;color:var(--muted)}
+.invite-actions{display:flex;gap:8px;margin-top:12px}
+
+.bh{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:16px}
+.ba{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);padding:14px 16px;text-align:center}
+.ba.winner{border-color:var(--gold);background:var(--gold-bg)}
+.ba-name{font-size:13px;font-weight:700;margin-bottom:3px}
+.ba-time{font-size:24px;font-weight:800;letter-spacing:-.03em;margin-bottom:3px}
+.ba-rank{font-size:11px;color:var(--muted)}
+.bvs{font-size:16px;font-weight:900;color:var(--light);text-align:center}
+
+.scomp{display:flex;flex-direction:column;gap:5px}
+.scomp-row{display:grid;grid-template-columns:1fr 88px 1fr;gap:6px;align-items:center}
+.scomp-l{display:flex;align-items:center;gap:5px;justify-content:flex-end}
+.scomp-r{display:flex;align-items:center;gap:5px}
+.scomp-bl,.scomp-br{height:18px;border-radius:3px;min-width:3px}
+.scomp-tl,.scomp-tr{font-size:11px;font-weight:600}
+.scomp-s{font-size:9px;font-weight:700;text-align:center;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+
+/* BADGES */
+.badge-cat{margin-bottom:18px}
+.bc-hd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.bc-t{font-size:13px;font-weight:700}
+.bc-c{font-size:11px;color:var(--muted)}
+.badge-row{display:flex;flex-wrap:wrap;gap:10px}
+.bi{display:flex;flex-direction:column;align-items:center;gap:4px;width:76px;cursor:default}
+.bicon{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid transparent;position:relative;transition:transform .15s}
+.bicon:hover{transform:scale(1.08)}
+.bicon.unlocked{border-color:var(--gold);background:var(--gold-bg);box-shadow:0 2px 8px rgba(196,146,42,.18)}
+.bicon.locked{background:var(--bg);border-color:var(--border);filter:grayscale(1);opacity:.4}
+.bicon.locked::after{content:'🔒';position:absolute;bottom:-3px;right:-3px;font-size:11px}
+.bname{font-size:10px;color:var(--muted);text-align:center;line-height:1.3}
+.bname.unlocked{color:var(--gold);font-weight:600}
+.prog-wrap{margin-top:12px}
+.prog-l{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.prog-track{height:6px;background:var(--bg);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px}
+
+/* CITY */
+.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+.city-card{border-radius:var(--rlg);overflow:hidden;border:1.5px solid var(--border);transition:transform .15s,box-shadow .15s}
+.city-card:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(0,0,0,.08)}
+.city-card.collected{border-color:var(--gold)}
+.city-card.locked-c{opacity:.55}
+.city-img{height:72px;display:flex;align-items:center;justify-content:center;font-size:32px}
+.city-info{background:var(--surface);padding:9px 11px}
+.city-name{font-size:12px;font-weight:700;margin-bottom:2px}
+.city-date{font-size:10px;color:var(--muted)}
+.city-badge{font-size:10px;font-weight:600;margin-top:4px}
+
+/* CHARITY */
+.charity-total{text-align:center;padding:24px 16px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--rlg);margin-bottom:14px}
+.ct-n{font-size:44px;font-weight:800;color:var(--green);letter-spacing:-.04em}
+.ct-l{font-size:12px;color:var(--green);margin-top:4px}
+
+/* GYM */
+.gym-filter{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.gym-filter button{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
+.gym-filter button.active{background:var(--red);color:#fff;border-color:var(--red)}
+.gym-table{width:100%;border-collapse:collapse}
+.gym-table th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--light);padding:0 10px 10px;border-bottom:1px solid var(--border)}
+.gym-table td{padding:11px 10px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+.gym-table tr:last-child td{border-bottom:none}
+.rank-b{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
+.gym-bar{height:7px;border-radius:3px;background:var(--red)}
+
+/* ELITE */
+.pts-tier{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px}
+.tier-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);padding:14px 16px;text-align:center}
+.tier-icon{font-size:28px;margin-bottom:6px}
+.tier-name{font-size:12px;font-weight:700;margin-bottom:2px}
+.tier-time{font-size:11px;color:var(--muted);margin-bottom:4px}
+.tier-pts{font-size:20px;font-weight:800}
+
+.elite-table{width:100%;border-collapse:collapse}
+.elite-table th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--light);padding:0 10px 10px;border-bottom:1px solid var(--border)}
+.elite-table td{padding:11px 10px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+.elite-table tr:last-child td{border-bottom:none}
+.flag{font-size:16px}
+.pts-bar{height:6px;border-radius:3px;background:var(--red);display:inline-block}
+
+@media(max-width:700px){
+  .g2,.g3,.g4,.kpi-strip,.pts-tier{grid-template-columns:1fr}
+  .page{padding:16px 14px 60px}
+  nav{padding:0 14px}
 }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo-mark">HX</div>
-  <div>
-    <div class="logo-text">HYROX China</div>
-    <div class="logo-sub"></div>
+<nav>
+  <div class="nl">HY<em>ROX</em></div>
+  <div class="nt">
+    <button class="ntb active" onclick="goto('battle',this)">1v1 Battle</button>
+    <button class="ntb" onclick="goto('badges',this)">Badges</button>
+    <button class="ntb" onclick="goto('city',this)">City Collection</button>
+    <button class="ntb" onclick="goto('charity',this)">Charity</button>
+    <button class="ntb" onclick="goto('gym',this)">Gym Board</button>
+    <button class="ntb" onclick="goto('elite',this)">Elite Ranking</button>
+    <button class="ntb" onclick="goto('hof',this)">🏆 Hall of Fame</button>
   </div>
-  <div class="header-right" id="time-display"></div>
-</header>
+</nav>
 
-<main>
-  <div class="greeting">
-    <h1>欢迎回来 👋</h1>
-    <p>以下是当前所有运营工具的入口，点击卡片直接跳转。</p>
-  </div>
-
-  <div class="section-label">运营 & 数据</div>
-  <div class="grid">
-
-    <a href="https://addie-5151.github.io/venue-kanban/" target="_blank" class="tool-card card-blue">
-      <div class="card-icon">🏗️</div>
-      <div class="card-title">赛场搭建进度</div>
-      <div class="card-desc">实时查看搭建任务进度、人员分配、各区域完成状态，支持按 Day 切换和甘特 / 看板双视图。</div>
-      <div class="card-footer">
-        <span class="card-tag">Venue Kanban</span>
-        <span class="card-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="https://addie-5151.github.io/athletes-feedback/" target="_blank" class="tool-card card-purple">
-      <div class="card-icon">📊</div>
-      <div class="card-title">运动员反馈看板</div>
-      <div class="card-desc">每站赛后更新。包含情感分布、高频关键词词云、CoZe 问题分类、社媒舆情以及重点关注 Case 分析。</div>
-      <div class="card-footer">
-        <span class="card-tag">Athletes Feedback</span>
-        <span class="card-arrow">→</span>
-      </div>
-    </a>
-
+<!-- ══ BATTLE ══ -->
+<div class="page active" id="page-battle">
+  <div class="sh">
+    <div class="sh-eye">1v1 Competition</div>
+    <div class="sh-title">Battle Card</div>
+    <div class="sh-sub">需要对方接受邀请后才能进行成绩比对</div>
   </div>
 
-  <div class="section-label">客服 & 支持</div>
-  <div class="grid">
+  <div class="card" style="margin-bottom:14px">
+    <div style="font-size:12px;font-weight:700;margin-bottom:6px">⚙️ Battle 机制说明</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px">
+      · 你可以向好友发起 Battle 邀请 &nbsp;·&nbsp; 对方需在 App / 小程序内<strong>接受邀请</strong>后才能开始对比<br>
+      · 对比范围：同一场比赛 OR 历史任意两场同城市赛站<br>
+      · 成绩数据来自 HYROX 官方成绩库，不可手动输入
+    </div>
 
-    <a href="https://addie-5151.github.io/hyrox-faq/" target="_blank" class="tool-card card-amber">
-      <div class="card-icon">📋</div>
-      <div class="card-title">FAQ 常见问题库</div>
-      <div class="card-desc">选手高频咨询问题标准回答，涵盖报名、支付、组别、退款、赛事规则等类别。</div>
-      <div class="card-footer">
-        <span class="card-tag">HYROX FAQ</span>
-        <span class="card-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="https://addie-5151.github.io/CS-workflow/" target="_blank" class="tool-card card-amber">
-      <div class="card-icon">💬</div>
-      <div class="card-title">客服工作流程</div>
-      <div class="card-desc">客服团队日常工作 SOP，包含回复规范、问题分级、跨部门协作流程。</div>
-      <div class="card-footer">
-        <span class="card-tag">CS Workflow</span>
-        <span class="card-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="https://addie-5151.github.io/raceday-helpdesk-workflow/" target="_blank" class="tool-card card-green">
-      <div class="card-icon">🏁</div>
-      <div class="card-title">比赛日 Helpdesk 流程</div>
-      <div class="card-desc">比赛日现场问题处理标准流程，包含常见突发情况的应对步骤与升级路径。</div>
-      <div class="card-footer">
-        <span class="card-tag">Raceday Workflow</span>
-        <span class="card-arrow">→</span>
-      </div>
-    </a>
-
+    <div style="font-size:12px;font-weight:700;margin-bottom:10px">发起 Battle 邀请</div>
+    <div class="battle-sel">
+      <select id="myRace"><option>上海站 2026-05-16 — 1:32:45</option><option>武汉站 2026-04-11 — 1:38:09</option><option>北京站 2026-03-21 — 1:41:22</option></select>
+      <div style="display:flex;align-items:center;font-weight:800;color:var(--light);padding:0 2px">VS</div>
+      <select id="oppFriend"><option>Zhang Min（好友）</option><option>Wang Fang（好友）</option><option>Liu Yang（好友）</option></select>
+      <button class="btn btn-r" onclick="sendInvite()">📨 发送 Battle 邀请</button>
+    </div>
   </div>
-</main>
 
-<footer>
-  <div class="footer-dot"></div>
-  <span>HYROX China · 内部工具导航</span>
-</footer>
+  <div class="invite-box" id="invite-sent" style="display:none">
+    <div class="invite-title">✅ 邀请已发送给 Zhang Min</div>
+    <div class="invite-sub">等待对方在小程序内接受 · 接受后自动生成 Battle Card · 72小时内未回应则邀请过期</div>
+    <div class="invite-actions">
+      <button class="btn btn-out" style="font-size:12px" onclick="showBattle()">预览 Battle Card（演示）</button>
+    </div>
+  </div>
+
+  <div id="battle-result" style="display:none">
+    <div style="background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;text-align:center;font-size:13px;font-weight:700;color:var(--gold)">
+      🏆 Li Wei 赢了！领先 Zhang Min 共 2:33
+    </div>
+    <div class="bh">
+      <div class="ba winner">
+        <div class="ba-name">Li Wei 🏆</div>
+        <div class="ba-time" style="color:var(--red)">1:32:45</div>
+        <div class="ba-rank">Top 12% · Open Women · 上海站</div>
+      </div>
+      <div class="bvs">VS</div>
+      <div class="ba">
+        <div class="ba-name">Zhang Min</div>
+        <div class="ba-time" style="color:var(--muted)">1:35:18</div>
+        <div class="ba-rank">Top 18% · Open Women · 上海站</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:12px;font-weight:700;margin-bottom:12px">
+        逐站对比 &nbsp;
+        <span style="font-weight:400;color:var(--muted);font-size:11px">红色 = Li Wei 领先 &nbsp;·&nbsp; 蓝色 = Zhang Min 领先</span>
+      </div>
+      <div class="scomp" id="scomp"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BADGES ══ -->
+<div class="page" id="page-badges">
+  <div class="sh">
+    <div class="sh-eye">Achievement System</div>
+    <div class="sh-title">Badge Collection</div>
+    <div class="sh-sub">实体徽章 · 完赛当天现场领取</div>
+  </div>
+
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card" style="background:var(--gold-bg);border-color:var(--gold-border)">
+      <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:8px">🎨 实体形式建议</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        推荐 <strong>PVC 软胶徽章</strong>（防水耐磨、色彩还原度高、可做异形、成本适中）或 <strong>金属搪瓷徽章</strong>（质感强、收藏价值高、适合高成就等级）。<br>
+        两级制设计：普通 Badge → PVC；高成就 Badge（Sub 1h、10 Club、World Tour）→ 金属搪瓷，进一步拉开层级感。
+      </div>
+    </div>
+    <div class="card" style="background:var(--green-bg);border-color:var(--green-border)">
+      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px">📦 发放流程</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        <strong>① 赛前</strong>：系统根据参赛记录预判本站可解锁的 Badge，提前备货放入完赛包<br>
+        <strong>② 完赛后</strong>：选手在完赛区领取完赛包，Badge 已在包内 —— 无需额外排队或申请<br>
+        <strong>③ 赛后核验</strong>：如有遗漏（如 Streak Badge 跨站触发），由检录台现场补发或下一站补入<br>
+        <strong>不设邮寄</strong>：所有 Badge 仅限现场领取，鼓励选手持续到场参赛
+      </div>
+    </div>
+  </div>
+
+  <div class="card badge-cat">
+    <div class="bc-hd"><span style="font-size:18px">🏆</span><span class="bc-t">Performance Badges</span><span class="bc-c">2/8 解锁</span><span class="tag tr" style="margin-left:auto">结果导向</span></div>
+    <div class="badge-row">
+      <div class="bi"><div class="bicon unlocked">🥈</div><div class="bname unlocked">Sub 2h</div></div>
+      <div class="bi"><div class="bicon unlocked">🥇</div><div class="bname unlocked">Sub 1h45</div></div>
+      <div class="bi"><div class="bicon locked">⚡</div><div class="bname">Sub 1h30<br><span style="color:var(--red);font-weight:700">差2:45!</span></div></div>
+      <div class="bi"><div class="bicon locked">💎</div><div class="bname">Sub 1h20</div></div>
+      <div class="bi"><div class="bicon locked">🔥</div><div class="bname">Sub 1h15</div></div>
+      <div class="bi"><div class="bicon locked">💥</div><div class="bname">Sub 1h10</div></div>
+      <div class="bi"><div class="bicon locked">👑</div><div class="bname">Sub 1h</div></div>
+      <div class="bi"><div class="bicon locked">🏅</div><div class="bname">Podium<br>Top 10%</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-l"><span>Sub 1h30 进度</span><span>PB 1:32:45 — 还差 2:45</span></div><div class="prog-track"><div class="prog-fill" style="width:84%;background:var(--red)"></div></div></div>
+  </div>
+
+  <div class="card badge-cat">
+    <div class="bc-hd"><span style="font-size:18px">🎽</span><span class="bc-t">Behavior Badges</span><span class="bc-c">2/6 解锁</span><span class="tag tb" style="margin-left:auto">参赛历程</span></div>
+    <div class="badge-row">
+      <div class="bi"><div class="bicon unlocked">🎉</div><div class="bname unlocked">First HYROX</div></div>
+      <div class="bi"><div class="bicon unlocked">3️⃣</div><div class="bname unlocked">3 Races</div></div>
+      <div class="bi"><div class="bicon locked">5️⃣</div><div class="bname">5 Races<br><span style="color:var(--red);font-weight:700">可领取!</span></div></div>
+      <div class="bi"><div class="bicon locked">🔟</div><div class="bname">10 Club</div></div>
+      <div class="bi"><div class="bicon locked">⚡</div><div class="bname">Back-to-Back</div></div>
+      <div class="bi"><div class="bicon locked">🌏</div><div class="bname">World Tour</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-l"><span>5 Races Badge</span><span>6/5 完成 ✅ — 杭州站完赛包中随附</span></div><div class="prog-track"><div class="prog-fill" style="width:100%;background:var(--green)"></div></div></div>
+  </div>
+
+  <div class="card badge-cat">
+    <div class="bc-hd"><span style="font-size:18px">🔥</span><span class="bc-t">Streak Badges</span><span class="bc-c">0/4 解锁</span><span class="tag tg" style="margin-left:auto">连续参赛</span></div>
+    <div class="badge-row">
+      <div class="bi"><div class="bicon locked">🔥</div><div class="bname">2 Streak</div></div>
+      <div class="bi"><div class="bicon locked">🔥🔥</div><div class="bname">3 Streak</div></div>
+      <div class="bi"><div class="bicon locked">💥</div><div class="bname">5 Streak</div></div>
+      <div class="bi"><div class="bicon locked">⚡💥</div><div class="bname">10 Elite</div></div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px">连续参加 N 站（中间不可跳过）自动解锁，北京→武汉→上海中断后重置为1</div>
+  </div>
+
+  <div class="card badge-cat">
+    <div class="bc-hd"><span style="font-size:18px">🤝</span><span class="bc-t">Social / 搭子 Badges</span><span class="bc-c">0/3 解锁</span><span class="tag tp" style="margin-left:auto">搭子系统</span></div>
+    <div class="badge-row">
+      <div class="bi"><div class="bicon locked">👥</div><div class="bname">Training Partner<br>同站2次</div></div>
+      <div class="bi"><div class="bicon locked">🤜🤛</div><div class="bname">Iron Friendship<br>同站5次</div></div>
+      <div class="bi"><div class="bicon locked">✈️</div><div class="bname">World Tour Duo<br>跨国同站</div></div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px">和同一位好友参加 2 站 / 5 站 / 跨国赛站，需双方互为好友且均完赛</div>
+  </div>
+</div>
+
+<!-- ══ CITY ══ -->
+<div class="page" id="page-city">
+  <div class="sh">
+    <div class="sh-eye">Season 25/26 Collection</div>
+    <div class="sh-title">City Collection</div>
+    <div class="sh-sub">已收集 3 / 10 城市 · 集齐全城市解锁 Season 限定套装 · 实体 Patch 随完赛包发放</div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px"><span>Season 25/26 城市收集进度</span><span>3 / 10</span></div>
+    <div class="prog-track" style="height:9px"><div class="prog-fill" style="width:30%;background:linear-gradient(90deg,var(--gold),#f59e0b)"></div></div>
+  </div>
+
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card" style="background:var(--gold-bg);border-color:var(--gold-border)">
+      <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:8px">🏙️ 城市 Patch 设计方向</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        每个城市一款限定 Patch，融入当地视觉元素（成都熊猫、上海外滩、北京故宫、三亚椰树等）。<br>
+        材质建议与完赛周边配套：PVC 软胶 Patch，可粘贴或缝合在训练包、背心上，强化收集动机。<br>
+        集齐 Season 全部城市 Patch → 解锁 <strong>Season 限定全站套装</strong>（下一赛季赛前邮寄发出，此为唯一邮寄例外）。
+      </div>
+    </div>
+    <div class="card" style="background:var(--green-bg);border-color:var(--green-border)">
+      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px">📦 发放流程</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        <strong>① 随完赛包发放</strong>：城市 Patch 预先放入当站完赛包，完赛后在完赛区领取，无需额外操作<br>
+        <strong>② 防重复机制</strong>：同一城市参加多次的选手，第二次起完赛包不再重复放入该城市 Patch（系统按报名 ID 过滤）<br>
+        <strong>③ 集齐奖励核验</strong>：Season 结束后选手在小程序提交"全收集"申请，系统核验参赛记录后触发限定套装发放流程<br>
+        <strong>不设现场兑换</strong>：Patch 直接在包内，不设单独领取窗口，减少现场排队
+      </div>
+    </div>
+  </div>
+
+  <div class="city-grid">
+    <div class="city-card collected"><div class="city-img" style="background:#fef3c7">🏛️</div><div class="city-info"><div class="city-name">北京</div><div class="city-date">2026-03-21</div><div class="city-badge tg tag">已收集 ✓</div></div></div>
+    <div class="city-card collected"><div class="city-img" style="background:#fef3c7">🌸</div><div class="city-info"><div class="city-name">武汉</div><div class="city-date">2026-04-11</div><div class="city-badge tg tag">已收集 ✓</div></div></div>
+    <div class="city-card collected"><div class="city-img" style="background:#fef3c7">🌉</div><div class="city-info"><div class="city-name">上海</div><div class="city-date">2026-05-16</div><div class="city-badge tg tag">已收集 ✓</div></div></div>
+    <div class="city-card locked-c"><div class="city-img" style="background:#f4f3ef">☕</div><div class="city-info"><div class="city-name">杭州</div><div class="city-date">2026-07-04</div><div class="city-badge tb tag">即将开赛</div></div></div>
+    <div class="city-card locked-c"><div class="city-img" style="background:#f4f3ef">🐼</div><div class="city-info"><div class="city-name">成都</div><div class="city-date">2026-08-01</div><div class="city-badge" style="color:var(--light);font-size:10px">报名中</div></div></div>
+    <div class="city-card locked-c"><div class="city-img" style="background:#f4f3ef">🌊</div><div class="city-info"><div class="city-name">深圳</div><div class="city-date">2026-08-15</div><div class="city-badge" style="color:var(--light);font-size:10px">即将开票</div></div></div>
+    <div class="city-card locked-c"><div class="city-img" style="background:#f4f3ef">🏯</div><div class="city-info"><div class="city-name">北京(秋)</div><div class="city-date">2026-09-12</div><div class="city-badge" style="color:var(--light);font-size:10px">即将开票</div></div></div>
+    <div class="city-card locked-c"><div class="city-img" style="background:#f4f3ef">🗼</div><div class="city-info"><div class="city-name">上海(秋)</div><div class="city-date">2026-10-31</div><div class="city-badge" style="color:var(--light);font-size:10px">即将开票</div></div></div>
+    <div class="city-card locked-c"><div class="city-img" style="background:#f4f3ef">🌺</div><div class="city-info"><div class="city-name">广州</div><div class="city-date">2026-11-21</div><div class="city-badge" style="color:var(--light);font-size:10px">即将开票</div></div></div>
+    <div class="city-card locked-c"><div class="city-img" style="background:#f4f3ef">🏝️</div><div class="city-info"><div class="city-name">三亚</div><div class="city-date">2026-12-05</div><div class="city-badge" style="color:var(--light);font-size:10px">即将开票</div></div></div>
+  </div>
+</div>
+
+<!-- ══ CHARITY ══ -->
+<div class="page" id="page-charity">
+  <div class="sh">
+    <div class="sh-eye">Social Impact</div>
+    <div class="sh-title">Charity Dashboard</div>
+    <div class="sh-sub">每次完赛自动捐出 5 元 · Season 25/26 全国实时汇总</div>
+  </div>
+  <div class="charity-total"><div class="ct-n">¥ 48,250</div><div class="ct-l">本赛季累计捐出 · 受益：山区青少年运动发展基金</div></div>
+  <div class="g3" style="margin-bottom:16px">
+    <div class="card" style="text-align:center"><div style="font-size:26px;font-weight:800;color:var(--green)">9,650</div><div style="font-size:11px;color:var(--muted)">完赛选手参与人次</div></div>
+    <div class="card" style="text-align:center"><div style="font-size:26px;font-weight:800;color:var(--green)">3</div><div style="font-size:11px;color:var(--muted)">已完成赛站</div></div>
+    <div class="card" style="text-align:center"><div style="font-size:26px;font-weight:800;color:var(--green)">¥30</div><div style="font-size:11px;color:var(--muted)">你的个人贡献（6场）</div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card" style="background:var(--green-bg);border-color:var(--green-border)">
+      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px">⚙️ 操作流程</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        <strong>① 票价内含</strong>：报名费中直接包含捐款金额（如 ¥5），无需选手额外操作，完赛即视为捐出<br>
+        <strong>② 赛后归集</strong>：每站赛事结束后，将完赛人数 × 单次捐款额提交财务，统一汇款至合作公益组织<br>
+        <strong>③ 数据更新</strong>：汇总数字在官方平台及本页面每站更新一次，保持透明可查<br>
+        <strong>④ 年度报告</strong>：Season 结束后输出一份简报，说明全年总捐款额、受益项目进展，可发布至社媒
+      </div>
+    </div>
+    <div class="card" style="background:var(--blue-bg);border-color:var(--blue-border)">
+      <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px">🤝 合作公益组织建议</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        选择与运动/青少年发展相关的知名公益组织，确保公信力和传播价值。建议方向：<br>
+        · <strong>中国扶贫基金会</strong> — 山区青少年体育项目，覆盖面广<br>
+        · <strong>壹基金</strong> — 知名度高，传播背书强<br>
+        · <strong>Special Olympics China</strong> — 与适应性选手理念高度契合<br>
+        合作方式：签订定向捐赠协议，指定用途，获得官方捐赠证书和 logo 使用授权
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GYM BOARD ══ -->
+<div class="page" id="page-gym">
+  <div class="sh">
+    <div class="sh-eye">Community</div>
+    <div class="sh-title">Gym Leaderboard</div>
+    <div class="sh-sub">Season 25/26 · 按健身房团队积分排名</div>
+  </div>
+
+  <div class="card" style="background:var(--blue-bg);border-color:var(--blue-border);margin-bottom:14px">
+    <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:6px">📊 积分规则</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.8">
+      · 同一健身房所有选手完赛成绩自动累计 &nbsp;·&nbsp; 选手需在报名时填写所属健身房<br>
+      · <strong>基础分</strong>：每位选手完赛得 100 分 &nbsp;·&nbsp; <strong>时间加分</strong>：Sub 1h30 → +50分，Sub 1h20 → +80分，Sub 1h10 → +120分，Sub 1h → +200分<br>
+      · <strong>赛站系数</strong>：各城市赛站分值相同，全国总分 = 所有城市站积分相加<br>
+      · Season 结束颁发"城市冠军"和"全国冠军"实体奖状
+    </div>
+  </div>
+
+  <div class="gym-filter" id="gym-filter">
+    <button class="active" onclick="setGymView('gym_total',this)">健身房总积分</button>
+    <button onclick="setGymView('gym_region',this)">健身房地区榜</button>
+    <button onclick="setGymView('athlete_total',this)">选手个人积分</button>
+  </div>
+
+  <div class="card">
+    <table class="gym-table">
+      <thead id="gym-thead"></thead>
+      <tbody id="gym-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ COUNTRY RANKING ══ -->
+<div class="page" id="page-elite">
+  <div class="sh">
+    <div class="sh-eye">Global Nations</div>
+    <div class="sh-title">国家积分榜</div>
+    <div class="sh-sub">在中国站参赛的各国选手成绩汇总 · 仅统计 Sub 1h30 · Season 25/26</div>
+  </div>
+
+  <!-- Scoring tiers -->
+  <div class="pts-tier" style="margin-bottom:16px">
+    <div class="tier-card" style="border-color:var(--red-border);background:var(--red-bg)">
+      <div class="tier-icon">⚡</div><div class="tier-name">LEGEND</div>
+      <div class="tier-time">Sub 1h00</div><div class="tier-pts" style="color:var(--red)">500 pts / 人</div>
+    </div>
+    <div class="tier-card" style="border-color:var(--gold-border);background:var(--gold-bg)">
+      <div class="tier-icon">👑</div><div class="tier-name">ELITE</div>
+      <div class="tier-time">1h00 – 1h10</div><div class="tier-pts" style="color:var(--gold)">350 pts / 人</div>
+    </div>
+    <div class="tier-card" style="border-color:var(--blue-border);background:var(--blue-bg)">
+      <div class="tier-icon">💎</div><div class="tier-name">PRO</div>
+      <div class="tier-time">1h10 – 1h20</div><div class="tier-pts" style="color:var(--blue)">200 pts / 人</div>
+    </div>
+    <div class="tier-card" style="border-color:var(--green-border);background:var(--green-bg)">
+      <div class="tier-icon">🔥</div><div class="tier-name">ADVANCED</div>
+      <div class="tier-time">1h20 – 1h30</div><div class="tier-pts" style="color:var(--green)">100 pts / 人</div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-icon">—</div><div class="tier-name">不计分</div>
+      <div class="tier-time">1h30+</div><div class="tier-pts" style="color:var(--light)">0 pts</div>
+    </div>
+  </div>
+
+  <div class="card" style="background:var(--red-bg);border-color:var(--red-border);margin-bottom:16px">
+    <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:5px">📊 积分规则</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.8">
+      · 统计在 HYROX 中国站参赛的所有国籍选手，<strong>仅 Sub 1h30 成绩计入国家积分</strong><br>
+      · 每位选手每场比赛按所在时间档贡献积分，同一选手多场均计入（每场取最佳 tier）<br>
+      · 国家总分 = 该国所有符合条件选手的积分之和 · 基于 HYROX 全球时间分布：Sub 90 = 全球优秀，Sub 75 = 高竞技，Sub 60 = 精英
+    </div>
+  </div>
+
+  <div class="gym-filter" id="elite-filter">
+    <button class="active" onclick="setEliteView('cn_pts',this)">🇨🇳 中国选手积分榜</button>
+    <button onclick="setEliteView('cn_region',this)">🇨🇳 中国地区榜</button>
+    <button onclick="setEliteView('intl_country',this)">🌏 海外国家榜</button>
+    <button onclick="setEliteView('intl_pts',this)">🌏 海外选手积分榜</button>
+  </div>
+  <div class="card">
+    <table class="elite-table">
+      <thead id="elite-thead"></thead>
+      <tbody id="elite-tbody"></tbody>
+    </table>
+  </div>
+</div>
 
 <script>
-function updateTime() {
-  const now = new Date();
-  const opts = { timeZone:'Asia/Shanghai', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' };
-  document.getElementById('time-display').textContent = now.toLocaleString('zh-CN', opts) + ' CST';
+function goto(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ntb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  btn.classList.add('active');
 }
-updateTime();
-setInterval(updateTime, 60000);
+
+// BATTLE
+function sendInvite(){document.getElementById('invite-sent').style.display='block'}
+function showBattle(){
+  document.getElementById('battle-result').style.display='block';
+  const st=[
+    ['Run 1',290,298],['SkiErg',441,398],['Run 2',292,301],['Sled Push',348,362],
+    ['Run 3',289,295],['Sled Pull',312,324],['Run 4',295,302],['Burpee BJ',404,421],
+    ['Run 5',291,297],['Row 1000m',268,281],['Run 6',293,300],['Farmer Carry',232,241],
+    ['Run 7',296,303],['Sandbag',380,392],['Run 8',294,301],['Wall Balls',936,960]
+  ];
+  const max=Math.max(...st.map(s=>Math.max(s[1],s[2])));
+  const fmt=s=>{const m=Math.floor(s/60),sec=s%60;return m+':'+(sec<10?'0':'')+sec};
+  document.getElementById('scomp').innerHTML=st.map(([n,a,b])=>{
+    const aw=Math.round(a/max*130),bw=Math.round(b/max*130),win=a<=b;
+    return `<div class="scomp-row">
+      <div class="scomp-l"><span class="scomp-tl" style="color:${win?'var(--red)':'var(--muted)'}">${fmt(a)}</span><div class="scomp-bl" style="width:${aw}px;background:${win?'var(--red)':'var(--border-mid)'}"></div></div>
+      <div class="scomp-s">${n}</div>
+      <div class="scomp-r"><div class="scomp-br" style="width:${bw}px;background:${!win?'var(--blue)':'var(--border-mid)'}"></div><span class="scomp-tr" style="color:${!win?'var(--blue)':'var(--muted)'}">${fmt(b)}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// GYM BOARD
+const gymViews = {
+  gym_total: {
+    thead: '<tr><th style="width:36px">#</th><th>健身房</th><th>选手数</th><th>积分</th><th style="width:140px">积分条</th><th>赛季变化</th></tr>',
+    data: [
+      {n:'SuperMonkey 深圳南山', region:'华南', m:48, p:9840, d:'+320'},
+      {n:'CrossFit Shanghai Central', region:'华东', m:42, p:8950, d:'+280'},
+      {n:'Wild Fitness 静安', region:'华东', m:38, p:7620, d:'+190'},
+      {n:'CrossFit Guangzhou', region:'华南', m:35, p:6980, d:'+210'},
+      {n:'F45 徐汇', region:'华东', m:31, p:5840, d:'+80'},
+      {n:'SuperMonkey 浦东', region:'华东', m:55, p:5310, d:'+450'},
+      {n:'HYROX Training Hub 成都', region:'西南', m:29, p:4200, d:'+160'},
+      {n:'CrossFit Beijing', region:'华北', m:33, p:3980, d:'+95'},
+    ],
+    renderRow: (g,i,max) => {
+      const rc=['#c4922a','#6b7280','#cd7f32'];
+      return `<tr>
+        <td><span class="rank-b" style="background:${i<3?rc[i]:'var(--bg)'};color:${i<3?'#fff':'var(--muted)'}">${i+1}</span></td>
+        <td><div style="font-weight:600">${g.n}</div><span class="tag tb" style="font-size:9px;margin-top:3px;display:inline-block">${g.region}</span></td>
+        <td style="color:var(--muted)">${g.m}人</td>
+        <td style="font-weight:700">${g.p.toLocaleString()}</td>
+        <td><div class="gym-bar" style="width:${Math.round(g.p/max*140)}px"></div></td>
+        <td style="color:${g.d.startsWith('+')?'var(--green)':'var(--red)'};font-size:11px;font-weight:600">${g.d}</td>
+      </tr>`;
+    }
+  },
+  gym_region: {
+    thead: '<tr><th style="width:36px">#</th><th>健身房</th><th>地区</th><th>选手数</th><th>积分</th><th style="width:140px">积分条</th></tr>',
+    data: [
+      {n:'SuperMonkey 深圳南山', region:'华南', m:48, p:4820},
+      {n:'CrossFit Guangzhou', region:'华南', m:35, p:3980},
+      {n:'CrossFit Shanghai Central', region:'华东', m:42, p:4210},
+      {n:'Wild Fitness 静安', region:'华东', m:38, p:3820},
+      {n:'CrossFit Beijing', region:'华北', m:33, p:3980},
+      {n:'HYROX Training Hub 成都', region:'西南', m:29, p:4200},
+    ],
+    renderRow: (g,i,max) => {
+      const regionColor={'华南':'var(--red)','华东':'var(--blue)','华北':'var(--purple)','西南':'var(--green)'};
+      const rc=['#c4922a','#6b7280','#cd7f32'];
+      return `<tr>
+        <td><span class="rank-b" style="background:${i<3?rc[i]:'var(--bg)'};color:${i<3?'#fff':'var(--muted)'}">${i+1}</span></td>
+        <td style="font-weight:600">${g.n}</td>
+        <td><span class="tag" style="background:transparent;border:1px solid ${regionColor[g.region]||'var(--border)'};color:${regionColor[g.region]||'var(--muted)'}">${g.region}</span></td>
+        <td style="color:var(--muted)">${g.m}人</td>
+        <td style="font-weight:700">${g.p.toLocaleString()}</td>
+        <td><div class="gym-bar" style="width:${Math.round(g.p/max*140)}px"></div></td>
+      </tr>`;
+    }
+  },
+  athlete_total: {
+    thead: '<tr><th style="width:36px">#</th><th>选手</th><th>所属健身房</th><th>完赛场次</th><th>最佳成绩</th><th>积分</th><th style="width:110px">积分条</th></tr>',
+    data: [
+      {n:'Chen Hao', gym:'CrossFit SH Central', races:4, best:'1:08:22', pts:1400, tier:'ELITE'},
+      {n:'Wang Peng', gym:'CrossFit Beijing', races:3, best:'58:44', pts:1050, tier:'LEGEND'},
+      {n:'Liu Jing', gym:'Wild Fitness 静安', races:4, best:'1:11:45', pts:800, tier:'PRO'},
+      {n:'Sun Tao', gym:'SuperMonkey 深圳南山', races:3, best:'1:02:18', pts:750, tier:'ELITE'},
+      {n:'Zhang Wei', gym:'HYROX Hub 成都', races:4, best:'1:18:52', pts:680, tier:'PRO'},
+      {n:'Li Fang', gym:'F45 徐汇', races:3, best:'1:22:39', pts:500, tier:'ADVANCED'},
+      {n:'Xu Jianming', gym:'SuperMonkey 浦东', races:4, best:'1:22:09', pts:480, tier:'ADVANCED'},
+      {n:'Sun Li', gym:'CrossFit Guangzhou', races:3, best:'1:26:44', pts:300, tier:'ADVANCED'},
+    ],
+    renderRow: (a,i,max) => {
+      const tc={LEGEND:'var(--red)',ELITE:'var(--gold)',PRO:'var(--blue)',ADVANCED:'var(--green)'};
+      const rc=['#c4922a','#6b7280','#cd7f32'];
+      return `<tr>
+        <td><span class="rank-b" style="background:${i<3?rc[i]:'var(--bg)'};color:${i<3?'#fff':'var(--muted)'}">${i+1}</span></td>
+        <td style="font-weight:600">${a.n}</td>
+        <td style="font-size:11px;color:var(--muted)">${a.gym}</td>
+        <td style="color:var(--muted)">${a.races}</td>
+        <td style="font-weight:600">${a.best}</td>
+        <td><span style="font-weight:800;color:${tc[a.tier]}">${a.pts}</span> <span style="font-size:9px;color:${tc[a.tier]};border:1px solid ${tc[a.tier]};border-radius:20px;padding:1px 5px">${a.tier}</span></td>
+        <td><div style="height:6px;border-radius:3px;background:${tc[a.tier]};width:${Math.round(a.pts/max*100)}px"></div></td>
+      </tr>`;
+    }
+  }
+};
+
+function setGymView(key,btn){
+  document.querySelectorAll('#gym-filter button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const v = gymViews[key];
+  document.getElementById('gym-thead').innerHTML = v.thead;
+  const max = v.data[0].p || v.data[0].pts;
+  document.getElementById('gym-tbody').innerHTML = v.data.map((g,i)=>v.renderRow(g,i,max)).join('');
+}
+setGymView('gym_total', document.querySelector('#gym-filter button'));
+
+// ELITE RANKING
+const eliteViews = {
+  cn_pts: {
+    thead: '<tr><th style="width:36px">#</th><th>选手</th><th>地区</th><th>场次</th><th>最佳成绩</th><th>积分</th><th style="width:110px">积分条</th></tr>',
+    data: [
+      {n:'Wang Peng', region:'华北', races:3, best:'58:44', pts:1050, tier:'LEGEND'},
+      {n:'Chen Hao', region:'华东', races:4, best:'1:08:22', pts:800, tier:'ELITE'},
+      {n:'Liu Jing', region:'华东', races:4, best:'1:11:45', pts:600, tier:'PRO'},
+      {n:'Zhang Wei', region:'西南', races:3, best:'1:18:52', pts:380, tier:'PRO'},
+      {n:'Sun Li', region:'华南', races:4, best:'1:22:39', pts:240, tier:'ADVANCED'},
+      {n:'Li Fang', region:'华东', races:3, best:'1:26:44', pts:200, tier:'ADVANCED'},
+      {n:'Xu Jianming', region:'华东', races:4, best:'1:22:09', pts:180, tier:'ADVANCED'},
+    ],
+    renderRow:(a,i,max)=>eliteRow(a,i,max,true)
+  },
+  cn_region: {
+    thead: '<tr><th style="width:36px">#</th><th>地区</th><th>有效选手</th><th>总积分</th><th style="width:130px">积分条</th></tr>',
+    data: [
+      {region:'华东', count:142, pts:18400},
+      {region:'华南', count:98, pts:12800},
+      {region:'华北', count:76, pts:9200},
+      {region:'西南', count:54, pts:6100},
+      {region:'华中', count:32, pts:3800},
+      {region:'西北', count:10, pts:1150},
+    ],
+    renderRow:(a,i,max)=>{
+      const rc=['#c4922a','#6b7280','#cd7f32'];
+      const regionColor={'华东':'var(--blue)','华南':'var(--red)','华北':'var(--purple)','西南':'var(--green)','华中':'var(--amber)','西北':'var(--teal)'};
+      return `<tr>
+        <td><span class="rank-b" style="background:${i<3?rc[i]:'var(--bg)'};color:${i<3?'#fff':'var(--muted)'}">${i+1}</span></td>
+        <td><span style="font-size:13px;font-weight:700;color:${regionColor[a.region]||'var(--text)'}">${a.region}</span></td>
+        <td style="color:var(--muted)">${a.count} 人</td>
+        <td style="font-weight:800;font-size:15px">${a.pts.toLocaleString()}</td>
+        <td><div style="height:8px;border-radius:4px;background:${regionColor[a.region]||'var(--accent)'};width:${Math.round(a.pts/max*120)}px"></div></td>
+      </tr>`;
+    }
+  },
+  intl_country: {
+    thead: '<tr><th style="width:36px">#</th><th>国家</th><th>参赛人数</th><th>有效人次</th><th>总积分</th><th style="width:120px">积分条</th></tr>',
+    data: [
+      {flag:'🇸🇬', name:'新加坡', total:28, valid:14, pts:2150},
+      {flag:'🇦🇺', name:'澳大利亚', total:22, valid:10, pts:1850},
+      {flag:'🇯🇵', name:'日本', total:18, valid:7, pts:1000},
+      {flag:'🇰🇷', name:'韩国', total:15, valid:6, pts:800},
+      {flag:'🇩🇪', name:'德国', total:8, valid:5, pts:750},
+      {flag:'🇬🇧', name:'英国', total:6, valid:4, pts:600},
+      {flag:'🇺🇸', name:'美国', total:7, valid:3, pts:400},
+      {flag:'🇨🇦', name:'加拿大', total:4, valid:2, pts:300},
+      {flag:'🇳🇿', name:'新西兰', total:3, valid:2, pts:300},
+    ],
+    renderRow:(a,i,max)=>{
+      const rc=['#c4922a','#6b7280','#cd7f32'];
+      const colors=['var(--red)','var(--gold)','var(--blue)','var(--green)','var(--muted)'];
+      const c=colors[Math.min(i,4)];
+      return `<tr>
+        <td><span class="rank-b" style="background:${i<3?rc[i]:'var(--bg)'};color:${i<3?'#fff':'var(--muted)'}">${i+1}</span></td>
+        <td><span style="font-size:18px">${a.flag}</span> <span style="font-weight:700;margin-left:6px">${a.name}</span></td>
+        <td style="color:var(--muted)">${a.total}</td>
+        <td style="font-weight:600">${a.valid}</td>
+        <td style="font-weight:800;font-size:15px;color:${c}">${a.pts.toLocaleString()}</td>
+        <td><div style="height:7px;border-radius:4px;background:${c};width:${Math.round(a.pts/max*120)}px"></div></td>
+      </tr>`;
+    }
+  },
+  intl_pts: {
+    thead: '<tr><th style="width:36px">#</th><th>选手</th><th>国籍</th><th>场次</th><th>最佳成绩</th><th>积分</th><th style="width:110px">积分条</th></tr>',
+    data: [
+      {n:'Mike Chen', flag:'🇸🇬', races:2, best:'1:16:33', pts:400, tier:'PRO'},
+      {n:'James Park', flag:'🇦🇺', races:2, best:'1:21:14', pts:250, tier:'ADVANCED'},
+      {n:'Tanaka R.', flag:'🇯🇵', races:2, best:'1:25:01', pts:200, tier:'ADVANCED'},
+      {n:'Kim S.', flag:'🇰🇷', races:2, best:'1:28:55', pts:150, tier:'ADVANCED'},
+      {n:'Mueller F.', flag:'🇩🇪', races:1, best:'1:09:44', pts:350, tier:'ELITE'},
+      {n:'Smith J.', flag:'🇬🇧', races:1, best:'1:19:22', pts:200, tier:'PRO'},
+    ],
+    renderRow:(a,i,max)=>eliteRow({...a,region:a.flag},i,max,false)
+  }
+};
+
+function eliteRow(a,i,max,showRegion){
+  const tc={LEGEND:'var(--red)',ELITE:'var(--gold)',PRO:'var(--blue)',ADVANCED:'var(--green)'};
+  const rc=['#c4922a','#6b7280','#cd7f32'];
+  const col3 = showRegion
+    ? `<td style="font-size:11px"><span style="color:var(--muted)">${a.region}</span></td>`
+    : `<td style="font-size:16px">${a.region}</td>`;
+  return `<tr>
+    <td><span class="rank-b" style="background:${i<3?rc[i]:'var(--bg)'};color:${i<3?'#fff':'var(--muted)'}">${i+1}</span></td>
+    <td style="font-weight:600">${a.n}</td>
+    ${col3}
+    <td style="color:var(--muted)">${a.races}</td>
+    <td style="font-weight:600">${a.best}</td>
+    <td><span style="font-weight:800;color:${tc[a.tier]}">${a.pts}</span> <span style="font-size:9px;color:${tc[a.tier]};border:1px solid ${tc[a.tier]};border-radius:20px;padding:1px 5px">${a.tier}</span></td>
+    <td><div style="height:6px;border-radius:3px;background:${tc[a.tier]};width:${Math.round(a.pts/max*100)}px"></div></td>
+  </tr>`;
+}
+
+function setEliteView(key,btn){
+  document.querySelectorAll('#elite-filter button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const v = eliteViews[key];
+  document.getElementById('elite-thead').innerHTML = v.thead;
+  const firstItem = v.data[0];
+  const max = firstItem.pts || firstItem.pts;
+  document.getElementById('elite-tbody').innerHTML = v.data.map((a,i)=>v.renderRow(a,i,max)).join('');
+}
+setEliteView('cn_pts', document.querySelector('#elite-filter button'));
+
 </script>
+
+<!-- ══ FACES OF HYROX CHINA ══ -->
+<div class="page" id="page-hof">
+  <div class="sh">
+    <div class="sh-eye">Faces of HYROX China</div>
+    <div class="sh-title">Hall of Fame</div>
+    <div class="sh-sub">每站赛后更新 · 在赛场大屏轮播展示 · 以照片为主</div>
+  </div>
+
+  <div class="card" style="background:var(--gold-bg);border-color:var(--gold-border);margin-bottom:24px">
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div style="font-size:22px;flex-shrink:0">🖥️</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        Hall of Fame 在<strong>每站比赛现场大屏实时展示</strong>。选手完赛后若成绩打破当站纪录，大屏立即更新并高亮 NEW 标志。Faces of HYROX China 卡片以照片为主，在大屏轮播，每站赛后更新。
+      </div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card" style="border-top:3px solid var(--red);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">🏃</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red)">Open · Men 最快</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--red);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">🏃‍♀️</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red)">Open · Women 最快</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">⚡</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gold)">Pro · Men 最快</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">⚡</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gold)">Pro · Women 最快</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">👫</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue)">Doubles · Mixed 最快</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">👬</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue)">Doubles · Men 最快</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--purple);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">👭</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--purple)">Doubles · Women 最快</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--purple);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">🔄</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--purple)">Relay · 4-Person 最快</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">🎖️</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green)">Masters · Men 40+ 最快</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">♿</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gold)">适应性选手最佳成绩</div>
+    </div>
+    <div class="card" style="border-top:3px solid #b45309;text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">👴</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#b45309">最年长完赛</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">🌱</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green)">最年轻完赛</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">✈️</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue)">最远来袭</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--red);text-align:center;padding:28px 16px">
+      <div style="font-size:32px;margin-bottom:10px">🎂</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red)">今日寿星</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px">16 / 18 岁生日当天完赛</div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
